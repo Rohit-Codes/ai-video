@@ -3,7 +3,7 @@ const catchAsyncError = (fun) => {
     fun(req, res, next)
       .then()
       .catch((err) => {
-        next(err);
+        return next(err);
       });
   };
 };
