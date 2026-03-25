@@ -3,13 +3,23 @@ const dotenv = require("dotenv");
 const connectDB = require("./database/connection");
 const authRoutes = require("./routes/auth.router");
 const cookieparser = require("cookie-parser");
+const cors = require("cors");
+const redisClient = require("./config/redis.client");
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const origin = ["http://localhost:5173", "http://localhost:5174"];
+
 app.use(express.json());
 app.use(cookieparser());
+app.use(
+  cors({
+    origin,
+    credentials: true,
+  }),
+);
 app.use("/api/v1/auth", authRoutes);
 
 app.use((err, req, res, next) => {
